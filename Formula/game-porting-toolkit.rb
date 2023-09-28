@@ -55,7 +55,8 @@ class GamePortingToolkit < Formula
                   "libusb",
                   "gettext",
                   "openssl@1.1",
-                  "sane-backends"]
+                  "sane-backends",
+                  "molten-vk"]
   @@named_deps.each do |dep|
     depends_on dep
   end
@@ -83,7 +84,8 @@ class GamePortingToolkit < Formula
     ENV.append "GSTREAMER_LIBS", "-lglib-2.0 -lgmodule-2.0 -lgstreamer-1.0 -lgstaudio-1.0 -lgstvideo-1.0 -lgstgl-1.0 -lgobject-2.0"
 
     # We also need to tell the linker to add Homebrew to the rpath stack.
-    ENV.append "LDFLAGS", "-lSystem -L#{HOMEBREW_PREFIX}/lib -Wl,-rpath,#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@executable_path/../lib/external"
+    # Whisky also needs @loader_path/../lib/ for its own libraries.
+    ENV.append "LDFLAGS", "-lSystem -L#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@loader_path/../lib,#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@executable_path/../lib/external"
 
     # Common compiler flags for both Mach-O and PE binaries.
     ENV.append_to_cflags "-O3 -Wno-implicit-function-declaration -Wno-format -Wno-deprecated-declarations -Wno-incompatible-pointer-types"
@@ -95,6 +97,8 @@ class GamePortingToolkit < Formula
                               "--disable-win16",
                               "--disable-tests",
                               "--without-x",
+                              "--with-sdl",
+                              "--with-vulkan",
                               "--without-pulse",
                               "--without-dbus",
                               "--without-inotify",
@@ -116,9 +120,6 @@ class GamePortingToolkit < Formula
                                 "--without-sane",
                                 "--without-krb5",
                                 "--disable-winedbg",
-                                "--without-vulkan",
-                                "--disable-vulkan_1",
-                                "--disable-winevulkan",
                                 "--without-openal",
                                 "--without-unwind",
                                 "--without-usb"]
