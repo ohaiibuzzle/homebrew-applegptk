@@ -12095,11 +12095,10 @@ index eb65f0802a4..40704aeb6f7 100644
  #endif
 -- 
 2.39.2 (Apple Git-144)
-
-diff --git a/dlls/kernel32/kernel32.spec b/dlls/kernel32/kernel32.spec
-index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68dfa3208dac 100644
---- wine/dlls/kernel32/kernel32.spec
-+++ wine/dlls/kernel32/kernel32.spec
+diff --git a/wine/dlls/kernel32/kernel32.spec b/wine/dlls/kernel32/kernel32.spec
+index 2ae9ccdc9..12ec1d3f0 100644
+--- a/wine/dlls/kernel32/kernel32.spec
++++ b/wine/dlls/kernel32/kernel32.spec
 @@ -272,8 +272,8 @@
  @ stdcall -import CreateDirectoryA(str ptr)
  @ stdcall CreateDirectoryExA(str str ptr)
@@ -12111,14 +12110,12 @@ index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68df
  @ stdcall -import CreateDirectoryW(wstr ptr)
  @ stdcall -import CreateEventA(ptr long long str)
  @ stdcall -import CreateEventExA(ptr str long long)
-@@ -283,12 +283,14 @@
- @ stdcall -import CreateFiberEx(long long long ptr ptr)
+@@ -284,10 +284,12 @@
  @ stdcall -import CreateFile2(wstr long long long ptr)
  @ stdcall -import CreateFileA(str long long ptr long long long)
-+@ stdcall CreateFileTransactedA(str long long ptr long long long ptr ptr ptr)
  @ stdcall CreateFileMappingA(long ptr long long long str)
++@ stdcall CreateFileTransactedA(str long long ptr long long long ptr ptr ptr)
  # @ stub CreateFileMappingNumaA
- @ stdcall CreateFileMappingFromApp(long ptr long int64 wstr) kernelbase.CreateFileMappingFromApp
  @ stdcall -import CreateFileMappingNumaW(long ptr long long long wstr long)
  @ stdcall -import CreateFileMappingW(long ptr long long long wstr)
  @ stdcall -import CreateFileW(wstr long long ptr long long long)
@@ -12126,7 +12123,7 @@ index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68df
  @ stdcall -import CreateHardLinkA(str str ptr)
  @ stdcall CreateHardLinkTransactedA(str str ptr ptr)
  @ stdcall CreateHardLinkTransactedW(wstr wstr ptr ptr)
-@@ -365,8 +367,8 @@
+@@ -364,8 +366,8 @@
  @ stdcall DeleteCriticalSection(ptr) NTDLL.RtlDeleteCriticalSection
  @ stdcall -import DeleteFiber(ptr)
  @ stdcall -import DeleteFileA(str)
@@ -12137,7 +12134,7 @@ index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68df
  @ stdcall -import DeleteFileW(wstr)
  @ stdcall -import DeleteProcThreadAttributeList(ptr)
  # @ stub DisableThreadProfiling
-@@ -488,8 +490,8 @@
+@@ -486,8 +488,8 @@
  @ stdcall -import FindFirstFileExW(wstr long ptr long ptr long)
  # @ stub FindFirstFileNameTransactedW
  # @ stub FindFirstFileNameW
@@ -12148,7 +12145,7 @@ index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68df
  @ stdcall -import FindFirstFileW(wstr ptr)
  # @ stub FindFirstStreamTransactedW
  @ stdcall -import FindFirstStreamW(wstr long ptr long)
-@@ -677,8 +679,8 @@
+@@ -675,8 +677,8 @@
  @ stdcall -import GetFileAttributesA(str)
  @ stdcall -import GetFileAttributesExA(str long ptr)
  @ stdcall -import GetFileAttributesExW(wstr long ptr)
@@ -12159,7 +12156,7 @@ index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68df
  @ stdcall -import GetFileAttributesW(wstr)
  # @ stub GetFileBandwidthReservation
  @ stdcall -import GetFileInformationByHandle(long ptr)
-@@ -1292,8 +1294,8 @@
+@@ -1287,8 +1289,8 @@
  @ stdcall -import ReplaceFile(wstr wstr wstr long ptr ptr) ReplaceFileW
  @ stdcall ReplaceFileA(str str str long ptr ptr)
  @ stdcall -import ReplaceFileW(wstr wstr wstr long ptr ptr)
@@ -12170,12 +12167,12 @@ index 8da6321e8d0352f04c7abc5c7f8f99f2022cabe8..16ce6ffa41e1390a5321a66047cd68df
  @ stdcall -import RemoveDllDirectory(ptr)
  # @ stub RemoveSecureMemoryCacheCallback
  # @ stub ReplacePartitionUnit
-diff --git a/dlls/kernel32/path.c b/dlls/kernel32/path.c
-index 028cf96d8cc6dbb0c48a748d856b968c663500bb..724f7288bc54a6423e87d9f85378c36e75774c2b 100644
---- wine/dlls/kernel32/path.c
-+++ wine/dlls/kernel32/path.c
+diff --git a/wine/dlls/kernel32/path.c b/wine/dlls/kernel32/path.c
+index 2dd3eac3c..7f558ee7b 100644
+--- a/wine/dlls/kernel32/path.c
++++ b/wine/dlls/kernel32/path.c
 @@ -158,6 +158,128 @@ BOOL WINAPI MoveFileTransactedW(const WCHAR *source, const WCHAR *dest, LPPROGRE
-     return MoveFileWithProgressW(source, dest, progress, data, flags);
+     return FALSE;
  }
  
 +/*************************************************************************
@@ -12303,6 +12300,7 @@ index 028cf96d8cc6dbb0c48a748d856b968c663500bb..724f7288bc54a6423e87d9f85378c36e
  /**************************************************************************
   *           MoveFileWithProgressA   (KERNEL32.@)
   */
+
 diff --git a/dlls/kernel32/kernel32.spec b/dlls/kernel32/kernel32.spec
 index 2ae9ccdc93f..51a14338d93 100644
 --- wine/dlls/kernel32/kernel32.spec
