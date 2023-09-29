@@ -12095,10 +12095,10 @@ index eb65f0802a4..40704aeb6f7 100644
  #endif
 -- 
 2.39.2 (Apple Git-144)
-diff --git a/wine/dlls/kernel32/kernel32.spec b/wine/dlls/kernel32/kernel32.spec
+diff --git a/dlls/kernel32/kernel32.spec b/dlls/kernel32/kernel32.spec
 index 2ae9ccdc9..12ec1d3f0 100644
---- a/wine/dlls/kernel32/kernel32.spec
-+++ b/wine/dlls/kernel32/kernel32.spec
+--- wine/dlls/kernel32/kernel32.spec
++++ wine/dlls/kernel32/kernel32.spec
 @@ -272,8 +272,8 @@
  @ stdcall -import CreateDirectoryA(str ptr)
  @ stdcall CreateDirectoryExA(str str ptr)
@@ -12167,10 +12167,10 @@ index 2ae9ccdc9..12ec1d3f0 100644
  @ stdcall -import RemoveDllDirectory(ptr)
  # @ stub RemoveSecureMemoryCacheCallback
  # @ stub ReplacePartitionUnit
-diff --git a/wine/dlls/kernel32/path.c b/wine/dlls/kernel32/path.c
+diff --git a/dlls/kernel32/path.c b/dlls/kernel32/path.c
 index 2dd3eac3c..7f558ee7b 100644
---- a/wine/dlls/kernel32/path.c
-+++ b/wine/dlls/kernel32/path.c
+--- wine/dlls/kernel32/path.c
++++ wine/dlls/kernel32/path.c
 @@ -158,6 +158,128 @@ BOOL WINAPI MoveFileTransactedW(const WCHAR *source, const WCHAR *dest, LPPROGRE
      return FALSE;
  }
