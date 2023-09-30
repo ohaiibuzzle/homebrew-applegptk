@@ -85,7 +85,7 @@ class GamePortingToolkit < Formula
 
     # We also need to tell the linker to add Homebrew to the rpath stack.
     # Whisky also needs @loader_path/../lib/ for its own libraries.
-    ENV.append "LDFLAGS", "-lSystem -L#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@loader_path/../lib,#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@executable_path/../lib/external"
+    ENV.append "LDFLAGS", "-lSystem -L#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@loader_path/../lib,-rpath,#{HOMEBREW_PREFIX}/lib -Wl,-rpath,@executable_path/../lib/external"
 
     # Common compiler flags for both Mach-O and PE binaries.
     ENV.append_to_cflags "-O3 -Wno-implicit-function-declaration -Wno-format -Wno-deprecated-declarations -Wno-incompatible-pointer-types"
